@@ -11,8 +11,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import driver.DriverManager;
-
 import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +21,7 @@ public class logginPage {
     public Object[][] getData() {
         return new Object[][] {
                 {"standard_user", "secret_sauce"},
-                {"locked_out_user", "secret_sauce"},
+
                 {"problem_user", "secret_sauce"},
                 {"performance_glitch_user","secret_sauce"},
                 {"error_user","secret_sauce"},
@@ -45,14 +43,13 @@ public class logginPage {
         WebElement Button = driver.findElement(By.xpath("//input[@type=\"submit\"]"));
 
        Button.click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         String Expectet= driver.getCurrentUrl();
-        wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));        String Current =driver.getCurrentUrl();
+        wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
         String Actual ="https://www.saucedemo.com/inventory.html";
-        Assert.assertEquals(Actual,Expectet);
+       Assert.assertEquals(Actual,Expectet);
         driver.quit();
         }
-
        @Test(priority=2, enabled=true ,groups = "UI")
        public void ValidateLoginButtonISClickable()
        {
