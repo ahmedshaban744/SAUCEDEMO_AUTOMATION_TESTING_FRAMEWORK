@@ -113,6 +113,40 @@ public class HomePageValid {
         Assert.assertEquals(actualCount, productCount);
         driver.quit();
     }
+  @Test(priority = 10,enabled = true,groups = "Home Page")
+  public void ValidateProductClikable() {
+      WebDriverManager.chromedriver().setup();
+      ChromeOptions options = new ChromeOptions();
+      WebDriver driver = new ChromeDriver(options);        driver.get("https://www.saucedemo.com/");
+      WebElement username = driver.findElement(By.xpath("//input[@placeholder=\"Username\"]"));
+      username.sendKeys("standard_user");
+      WebElement password = driver.findElement(By.xpath("//input[@placeholder=\"Password\"]"));
+      password.sendKeys("secret_sauce");
+      WebElement Button = driver.findElement(By.xpath("//input[@type=\"submit\"]"));
+      Button.click();
+      WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+      wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
+      List<WebElement> items = driver.findElements(By.className("inventory_item"));
+
+         for (WebElement item : items)
+
+          {
+               WebElement imag=item.findElement(By.className("inventory_item_img"));
+               WebElement Title=item.findElement(By.className("inventory_item_name"));
+               imag.click();
+               driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+               Assert.assertTrue(imag.isEnabled());
+               driver.navigate().back();
+               driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+               Title.click();
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+               driver.navigate().back();
+               Assert.assertTrue(Title.isEnabled());
+               driver.navigate().back();
+               driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+}
+
+  }
 }
 
 

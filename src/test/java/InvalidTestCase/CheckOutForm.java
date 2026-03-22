@@ -38,7 +38,6 @@ public class CheckOutForm {
         };
     }
 
-
     @Test(priority = 9,enabled = true,groups = "pyments",dataProvider = "CheckOutInvalidData")
     public void ValidatefailCheckOutForm(String First_Name, String Last_Name,String ZipCode)
 
