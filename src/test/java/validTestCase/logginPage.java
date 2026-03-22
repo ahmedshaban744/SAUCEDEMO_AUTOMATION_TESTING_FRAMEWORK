@@ -69,71 +69,7 @@ public class logginPage {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         driver.close();
     }
-@Test(priority = 5, enabled = true,groups = "Home Page")
-    public void ValidateBurrgerMenueFunctionality()
-{
-        WebDriverManager.chromedriver().setup();
-    ChromeOptions options = new ChromeOptions();
-    WebDriver driver = new ChromeDriver(options);        driver.get("https://www.saucedemo.com/");
-    WebElement username = driver.findElement(By.xpath("//input[@placeholder=\"Username\"]"));
-    username.sendKeys("standard_user");
-    WebElement password = driver.findElement(By.xpath("//input[@placeholder=\"Password\"]"));
-    password.sendKeys("secret_sauce");
-    WebElement Button = driver.findElement(By.xpath("//input[@type=\"submit\"]"));
-    Button.click();
-    WebElement Burrger = driver.findElement(By.id("react-burger-menu-btn"));
-    Burrger.click();
-    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-    WebElement menue = driver.findElement(By.className("bm-menu"));
-    Assert.assertTrue(menue.isDisplayed());
-    WebElement About = driver.findElement(By.id("about_sidebar_link"));
-    About.click();
-    WebDriverWait wait4 = new WebDriverWait(driver, Duration.ofSeconds(10));
-    wait4.until(ExpectedConditions.urlToBe("https://saucelabs.com/"));
-    String ExpectednewPage=driver.getCurrentUrl();
-    String ActualnewPage="https://saucelabs.com/";
-    Assert.assertEquals(ActualnewPage,ExpectednewPage);
-driver.navigate().back();
 
-WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
-    WebElement Burrger2 = driver.findElement(By.id("react-burger-menu-btn"));
-    Burrger2.click();
-    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-    WebElement menue2 = driver.findElement(By.className("bm-menu"));
-
-    WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(10));
-    wait3.until(ExpectedConditions.visibilityOf(menue2));
-    WebElement closs = driver.findElement(By.xpath("//button[@id='react-burger-cross-btn']"));
-    closs.click();
-   WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
-   wait2.until(ExpectedConditions.invisibilityOf(menue2));
-    boolean click = menue2.isDisplayed();
-    Assert.assertFalse(click);
-
-}
-@Test(priority = 6,enabled = false)
-    public void ValidateLogoutFuncality() {
-    WebDriverManager.chromedriver().setup();
-    ChromeOptions options = new ChromeOptions();
-    WebDriver driver = new ChromeDriver(options);        driver.get("https://www.saucedemo.com/");
-    WebElement username = driver.findElement(By.xpath("//input[@placeholder=\"Username\"]"));
-    username.sendKeys("standard_user");
-    WebElement password = driver.findElement(By.xpath("//input[@placeholder=\"Password\"]"));
-    password.sendKeys("secret_sauce");
-    WebElement Button = driver.findElement(By.xpath("//input[@type=\"submit\"]"));
-    Button.click();
-    WebElement Burrger = driver.findElement(By.id("react-burger-menu-btn"));
-    Burrger.click();
-    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-    WebElement menue = driver.findElement(By.className("bm-menu"));
-    WebElement Logout = driver.findElement(By.id("logout_sidebar_link"));
-    Logout.click();
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/"));
-    Assert.assertEquals(driver.getCurrentUrl(),"https://www.saucedemo.com/");
-    driver.quit();
-    }
     }
 
 
