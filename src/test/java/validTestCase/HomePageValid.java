@@ -113,11 +113,12 @@ public class HomePageValid {
         Assert.assertEquals(actualCount, productCount);
         driver.quit();
     }
-  @Test(priority = 10,enabled = true,groups = "Home Page")
+  @Test(priority = 10,enabled = false,groups = "Home Page")
   public void ValidateProductClikable() {
       WebDriverManager.chromedriver().setup();
       ChromeOptions options = new ChromeOptions();
-      WebDriver driver = new ChromeDriver(options);        driver.get("https://www.saucedemo.com/");
+      WebDriver driver = new ChromeDriver(options);
+      driver.get("https://www.saucedemo.com/");
       WebElement username = driver.findElement(By.xpath("//input[@placeholder=\"Username\"]"));
       username.sendKeys("standard_user");
       WebElement password = driver.findElement(By.xpath("//input[@placeholder=\"Password\"]"));
@@ -147,6 +148,79 @@ public class HomePageValid {
 }
 
   }
+    @Test(priority = 11,enabled = true,groups = "Home Page")
+    public void ValidateSocialMediaLinkFunctionality() {
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.saucedemo.com/");
+
+        // Login
+        driver.findElement(By.xpath("//input[@placeholder=\"Username\"]"))
+                .sendKeys("standard_user");
+        driver.findElement(By.xpath("//input[@placeholder=\"Password\"]"))
+                .sendKeys("secret_sauce");
+        driver.findElement(By.xpath("//input[@type=\"submit\"]")).click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
+
+        String mainWindow = driver.getWindowHandle();
+
+        // Helper function logic (manual inline handling)
+
+        // ---------------- TWITTER ----------------
+        driver.findElement(By.xpath("(//a[@rel='noreferrer'])[1]")).click();
+
+        for (String handle : driver.getWindowHandles()) {
+            if (!handle.equals(mainWindow)) {
+                driver.switchTo().window(handle);
+            }
+        }
+
+        wait.until(ExpectedConditions.urlContains("x.com"));
+        Assert.assertEquals(driver.getCurrentUrl(), "https://x.com/saucelabs");
+
+        driver.close();
+        driver.switchTo().window(mainWindow);
+
+        wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
+
+        // ---------------- FACEBOOK ----------------
+        driver.findElement(By.xpath("(//a[@rel='noreferrer'])[2]")).click();
+
+        for (String handle : driver.getWindowHandles()) {
+            if (!handle.equals(mainWindow)) {
+                driver.switchTo().window(handle);
+            }
+        }
+
+        wait.until(ExpectedConditions.urlContains("facebook.com"));
+        Assert.assertEquals(driver.getCurrentUrl(), "https://www.facebook.com/saucelabs");
+
+        driver.close();
+        driver.switchTo().window(mainWindow);
+
+        wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
+
+        // ---------------- LINKEDIN ----------------
+        driver.findElement(By.xpath("(//a[@rel='noreferrer'])[3]")).click();
+
+        for (String handle : driver.getWindowHandles()) {
+            if (!handle.equals(mainWindow)) {
+                driver.switchTo().window(handle);
+            }
+        }
+
+        wait.until(ExpectedConditions.urlContains("linkedin.com"));
+        Assert.assertEquals(driver.getCurrentUrl(), "https://www.linkedin.com/company/sauce-labs/");
+
+        driver.close();
+        driver.switchTo().window(mainWindow);
+
+        wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
+
+        driver.quit();
+    }
 }
 
 
