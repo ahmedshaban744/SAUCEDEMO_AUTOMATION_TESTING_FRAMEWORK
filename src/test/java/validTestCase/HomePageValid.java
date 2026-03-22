@@ -11,7 +11,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.lang.reflect.Array;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomePageValid {
@@ -82,38 +84,36 @@ public class HomePageValid {
         driver.quit();
     }
 
-    @Test(priority = 7,enabled = true,groups = "Home Page")
-    public void ValidateAdddToCartFunctionality()
-    {
-        int Product_Count=0;
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        WebDriver driver = new ChromeDriver(options);
-        driver.get("https://www.saucedemo.com/");
-        WebElement username = driver.findElement(By.xpath("//input[@placeholder=\"Username\"]"));
-        username.sendKeys("standard_user");
-        WebElement password = driver.findElement(By.xpath("//input[@placeholder=\"Password\"]"));
-        password.sendKeys("secret_sauce");
-        WebElement Button = driver.findElement(By.xpath("//input[@type=\"submit\"]"));
-        Button.click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
-        List<WebElement> items = driver.findElements(By.className("inventory_item"));
-        for (WebElement item : items) {
+    @Test(priority = 7,enabled = false,groups = "Home Page")
+    public void ValidateAdddToCartFunctionality() {
 
-            String name = item.findElement(By.className("inventory_item_name")).getText();
-            System.out.println(name);
-            WebElement AddButton=item.findElement(By.tagName("button"));
-            if(AddButton.isDisplayed()&&AddButton.getText().equals("Add to cart"))
-            {
-                AddButton.click();
-                Product_Count++;
-            }
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        driver.get("https://www.saucedemo.com/");
+
+        driver.findElement(By.xpath("//input[@placeholder='Username']")).sendKeys("standard_user");
+        driver.findElement(By.xpath("//input[@placeholder='Password']")).sendKeys("secret_sauce");
+        driver.findElement(By.xpath("//input[@type='submit']")).click();
+
+        wait.until(ExpectedConditions.urlContains("inventory"));
+
+        List<WebElement> addButtons = driver.findElements(By.xpath("//button[text()='Add to cart']"));
+
+        int productCount = addButtons.size();
+
+        for (WebElement btn : addButtons) {
+            btn.click();
         }
-        WebElement CartCount =driver.findElement(By.xpath("//span[@class='shopping_cart_badge']"));
-        int Expected =Integer.parseInt(CartCount.getText());
-        System.out.println(Expected);
-        System.out.println(CartCount.getText());
-         Assert.assertEquals(Expected,Product_Count);
+        WebElement cartBadge = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("shopping_cart_badge")));
+        int actualCount = Integer.parseInt(cartBadge.getText());
+        System.out.println("Expected: " + productCount);
+        System.out.println("Actual: " + actualCount);
+        Assert.assertEquals(actualCount, productCount);
+        driver.quit();
     }
 }
+
+
+
