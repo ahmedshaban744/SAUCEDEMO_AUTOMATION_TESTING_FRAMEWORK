@@ -154,6 +154,7 @@ public class HomePageValid {
         List<WebElement> cartItems = driver.findElements(By.className("cart_item"));
         Assert.assertEquals(cartItems.size(), totalProducts, "Cart items mismatch!");
 
+
         // Close browser
         driver.quit();
     }
