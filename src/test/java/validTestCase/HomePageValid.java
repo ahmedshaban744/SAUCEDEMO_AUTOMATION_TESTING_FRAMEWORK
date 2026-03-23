@@ -43,19 +43,15 @@ public class HomePageValid {
         String ActualnewPage="https://saucelabs.com/";
         Assert.assertEquals(ActualnewPage,ExpectednewPage);
         driver.navigate().back();
-
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
         driver.findElement(By.id("react-burger-menu-btn")).click();
-
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         WebElement menue2 = driver.findElement(By.className("bm-menu"));
         driver.findElement(By.className("bm-menu")).click();
-
         WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait3.until(ExpectedConditions.visibilityOf(menue2));
         driver.findElement(By.xpath("//button[@id='react-burger-cross-btn']")).click();
-
         WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait2.until(ExpectedConditions.invisibilityOf(menue2));
         boolean click = menue2.isDisplayed();
@@ -113,42 +109,56 @@ public class HomePageValid {
         Assert.assertEquals(actualCount, productCount);
         driver.quit();
     }
-  @Test(priority = 10,enabled = false,groups = "Home Page")
-  public void ValidateProductClikable() {
-      WebDriverManager.chromedriver().setup();
-      ChromeOptions options = new ChromeOptions();
-      WebDriver driver = new ChromeDriver(options);
-      driver.get("https://www.saucedemo.com/");
-      WebElement username = driver.findElement(By.xpath("//input[@placeholder=\"Username\"]"));
-      username.sendKeys("standard_user");
-      WebElement password = driver.findElement(By.xpath("//input[@placeholder=\"Password\"]"));
-      password.sendKeys("secret_sauce");
-      WebElement Button = driver.findElement(By.xpath("//input[@type=\"submit\"]"));
-      Button.click();
-      WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-      wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
-      List<WebElement> items = driver.findElements(By.className("inventory_item"));
+    @Test(priority = 10, enabled = true, groups = "Home Page")
+    public void ValidateAddAllProductsToCart() {
 
-         for (WebElement item : items)
+        // Setup
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.saucedemo.com/");
 
-          {
-               WebElement imag=item.findElement(By.className("inventory_item_img"));
-               WebElement Title=item.findElement(By.className("inventory_item_name"));
-               imag.click();
-               driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-               Assert.assertTrue(imag.isEnabled());
-               driver.navigate().back();
-               driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-               Title.click();
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-               driver.navigate().back();
-               Assert.assertTrue(Title.isEnabled());
-               driver.navigate().back();
-               driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-}
+        // Login
+        driver.findElement(By.id("user-name")).sendKeys("standard_user");
+        driver.findElement(By.id("password")).sendKeys("secret_sauce");
+        driver.findElement(By.id("login-button")).click();
 
-  }
-    @Test(priority = 11,enabled = true,groups = "Home Page")
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlContains("inventory"));
+
+        // 🔥 Get all "Add to cart" buttons directly (BEST APPROACH)
+        List<WebElement> addButtons = driver.findElements(
+                By.cssSelector("button[data-test^='add-to-cart']")
+        );
+
+        int totalProducts = addButtons.size();
+
+        // Add all products
+        for (WebElement btn : addButtons) {
+            btn.click();
+        }
+
+        // ✅ Validate cart count
+        WebElement cartBadge = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(By.className("shopping_cart_badge"))
+        );
+
+        int cartCount = Integer.parseInt(cartBadge.getText());
+
+        Assert.assertEquals(cartCount, totalProducts, "Not all products were added to cart!");
+
+        // Open cart
+        driver.findElement(By.className("shopping_cart_link")).click();
+        wait.until(ExpectedConditions.urlContains("cart"));
+
+        // ✅ Validate number of items in cart page
+        List<WebElement> cartItems = driver.findElements(By.className("cart_item"));
+        Assert.assertEquals(cartItems.size(), totalProducts, "Cart items mismatch!");
+
+
+        // Close browser
+        driver.quit();
+    }
+    @Test(priority = 11,enabled = false,groups = "Home Page")
     public void ValidateSocialMediaLinkFunctionality() {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
@@ -168,7 +178,6 @@ public class HomePageValid {
 
         // Helper function logic (manual inline handling)
 
-        // ---------------- TWITTER ----------------
         driver.findElement(By.xpath("(//a[@rel='noreferrer'])[1]")).click();
 
         for (String handle : driver.getWindowHandles()) {
@@ -185,7 +194,6 @@ public class HomePageValid {
 
         wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
 
-        // ---------------- FACEBOOK ----------------
         driver.findElement(By.xpath("(//a[@rel='noreferrer'])[2]")).click();
 
         for (String handle : driver.getWindowHandles()) {
@@ -202,7 +210,6 @@ public class HomePageValid {
 
         wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
 
-        // ---------------- LINKEDIN ----------------
         driver.findElement(By.xpath("(//a[@rel='noreferrer'])[3]")).click();
 
         for (String handle : driver.getWindowHandles()) {
@@ -213,14 +220,12 @@ public class HomePageValid {
 
         wait.until(ExpectedConditions.urlContains("linkedin.com"));
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.linkedin.com/company/sauce-labs/");
-
         driver.close();
         driver.switchTo().window(mainWindow);
-
         wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
-
         driver.quit();
     }
+
 }
 
 

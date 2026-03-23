@@ -117,6 +117,6 @@ public class PymentsValidScenarios {
         System.out.println("Total = " + total);
         System.out.println("Sum of selected products = " + sum+tax);
         Assert.assertEquals(sum, total);
-
+        driver.quit();
     }
 }
