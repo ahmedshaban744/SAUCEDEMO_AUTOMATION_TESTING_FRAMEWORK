@@ -22,6 +22,7 @@ public class logginPageInvalid {
                 {"  visual_user","    secret_sauce"},
                 {" ","secret_sauce"},
                 {"standard_user"," "}
+                ,{" "," "}
         };
         }
     @Test(priority = 3,enabled = true,dataProvider ="loginInvalidData" , groups = "somke")
