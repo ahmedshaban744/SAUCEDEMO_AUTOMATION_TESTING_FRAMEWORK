@@ -124,7 +124,6 @@ groups = "pyments"
 ---
 
 
----
 
 ## 🚀 HOW TO RUN THE PROJECT
 
@@ -136,23 +135,45 @@ groups = "pyments"
 ### Steps
 
 1. Clone the repository:
-
 git clone https://github.com/ahmedshaban744/Testing.git
+2. Navigate to the project directory:
 cd Testing
+3. Run tests using Maven:
 mvn clean test
-
-✅ Now this version will:
-- Render correctly on GitHub  
-- Show proper headings on new lines  
-- Be clean and professional  
-- Look good in your portfolio  
-
 ---
+## Alternatively, run TestNG suites from your IDE:
+All Test Cases
+Invalid.xml
+Home Page.xml
+Payments.xml
+Alternatively, run TestNG suites from your IDE:
+All Test Cases
+Invalid.xml
+Home Page.xml
+Payments.xml
+---
+##⚙️ MAVEN CONFIGURATION
 
-If you want next level 🚀 I can:
-- Add **badges (build, tests, Selenium, Java)**  
-- Add **screenshots section + demo GIF**
-- Or upgrade this into a **top-tier portfolio README that impresses recruiters**
+Dependencies are managed using pom.xml, including:
+Selenium Java
+TestNG
+WebDriverManager
+This ensures:
+Automatic dependency resolution
+Consistent builds
+Easy project setup
+##📈 FUTURE IMPROVEMENTS
+---
+Implement Page Object Model (POM) design pattern
+Add reporting tools (Allure / Extent Reports)
+Integrate logging framework (Log4j)
+Enable cross-browser testing
+Add CI/CD integration (GitHub Actions / Jenkins)
+Improve test data management
+---
+##👤 AUTHOR
+
+Ahmed Shaban Mohamed
 
 
 
