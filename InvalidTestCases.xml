@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Invalid">
+
+    <test name=" Invalid TestCases" parallel="methods" thread-count="2">
+
+        <classes>
+            <class name="InvalidTestCase.logginPageInvalid"/>
+            <class name="InvalidTestCase.CheckOutForm"></class>
+        </classes>
+    </test>
+
+</suite>
