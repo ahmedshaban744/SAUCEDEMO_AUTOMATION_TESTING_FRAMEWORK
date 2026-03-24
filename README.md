@@ -1,26 +1,25 @@
 🧪 SauceDemo Automation Testing Framework
 📌 Overview
 
-This is a Test Automation Framework built using Selenium WebDriver, TestNG, and Maven to validate the functionality of the SauceDemo web application.
+This project is an automated testing framework developed to validate the functionality of the SauceDemo web application using Selenium WebDriver and TestNG with Maven as the build management tool.
 
-The framework is designed to support:
+The framework is designed to cover:
 
 Functional testing
+Negative testing
 Data-driven testing
-Parallel test execution
 Group-based test execution
-Scalable test suite organization
+Parallel test execution
 
-🔗 Application Under Test: https://www.saucedemo.com/
+Application under test: https://www.saucedemo.com/
 
-🎯 Key Features
-Automated UI testing using Selenium WebDriver
-TestNG-based test management
-Data-driven testing using @DataProvider
-Grouping of test cases (Smoke, Home Page, Payments, etc.)
-Parallel execution using TestNG suites
-Modular test structure (Valid / Invalid scenarios)
-Maven-based dependency management
+🎯 Objectives
+Validate user authentication (valid and invalid scenarios)
+Verify product selection and cart functionality
+Test checkout workflow and form validations
+Ensure correctness of payment calculations
+Detect UI and functional defects
+Provide scalable and maintainable test structure
 🛠️ Technologies Used
 Java
 Selenium WebDriver
@@ -28,106 +27,105 @@ TestNG
 WebDriverManager
 Maven
 ChromeDriver
-GitHub        
-🧪 Test Design Approach
-✅ Valid Test Cases
-Successful login scenarios
-Add to cart functionality
-Checkout process
-Payment validation
-Social media navigation
-❌ Invalid Test Cases
-Invalid login credentials
-Empty or incorrect checkout inputs
-Form validation error messages
+GitHub (Version Control)
+📂 Project Structure
+src/
+ └── test/
+     └── java/
+         ├── InvalidTestCase/
+         │   ├── CheckOutForm.java
+         │   └── logginPageInvalid.java
+         │
+         ├── validTestCase/
+         │   ├── HomePageValid.java
+         │   ├── logginPage.java
+         │   └── PymentsValidScenarios.java
+🧪 Test Coverage
+✅ Login Tests
+Valid login with multiple user types
+Invalid login scenarios
+Validation of error messages
+🏠 Home Page Tests
+Add all products to cart
+Validate cart badge count
+Burger menu functionality
+Logout functionality
+Social media link navigation
+🛒 Checkout Tests
+Checkout form validation with invalid inputs
+Successful checkout flow
+Error handling for missing or incorrect data
+💰 Payment Tests
+Validate total price calculation
+Verify tax and final total consistency
+Confirm successful order completion
+📊 Test Design Approach
+Data-driven testing using @DataProvider
+Separation of valid and invalid test scenarios
+Use of explicit and implicit waits
+Assertion-based validation using TestNG
+Modular test classes organized by functionality
 ⚙️ TestNG Suites
 
-The project uses multiple TestNG XML suites to control execution:
+The project includes multiple TestNG XML suites to control execution:
 
-1️⃣ All Test Cases Suite
-Runs all test classes
-Uses parallel execution (methods, thread-count=6)
-2️⃣ Invalid Test Suite
-Executes only negative test scenarios
-Focus on:
-Login validation
-Checkout form validation
-3️⃣ Home Page Suite
-Uses groups filtering
-Runs tests tagged with:
-        groups = "Home Page"
-4️⃣ Payments Suite
+1. All Test Cases Suite
+Executes all test classes
+Supports parallel execution of methods
+2. Invalid Test Suite
+Executes negative test scenarios
+Covers login and checkout validation cases
+3. Home Page Suite
 
-Runs payment-related tests using group:
+Executes tests grouped under:
 
-         groups = "pyments"
-Validates:
-Checkout flow
-Total price calculation
+groups = "Home Page"
+Focuses on UI and functional validation of the home page
+4. Payments Suite
+
+Executes tests grouped under:
+
+groups = "pyments"
+Focuses on checkout and payment validation
+⚡ Parallel Execution
+Configured using TestNG:
+parallel="methods"
+thread-count defined per suite
+Improves execution performance by running tests concurrently
 🚀 How to Run the Project
-🔹 Prerequisites
-Java 23 (as configured in POM)
+Prerequisites
+Java 23
 Maven installed
 Chrome browser installed
-🔹 Clone Repository
+Steps
+Clone the repository:
 git clone https://github.com/ahmedshaban744/Testing.git
+Navigate to the project directory:
 cd Testing
-🔹 Run Using Maven
+Run tests using Maven:
 mvn clean test
-🔹 Run Using TestNG Suite
-
-You can run any of the XML suites:
-
-All Test Cases.xml
+Alternatively, run specific TestNG XML suites from your IDE:
+All Test Cases
 Invalid.xml
 Home Page.xml
 Payments.xml
+⚙️ Maven Configuration
 
-Run from IDE or via TestNG configuration.
-
-📦 Maven Configuration
-
-The project uses the following dependencies:
+Dependencies are managed using pom.xml, including:
 
 Selenium Java
 TestNG
 WebDriverManager
 
-Managed via Maven pom.xml, which ensures:
+This ensures automatic dependency resolution and consistent project builds.
 
-Automatic dependency resolution
-Consistent environment setup
-Easy project build
-⚡ Parallel Execution
-
-Configured using TestNG:
-
-parallel="methods"
-thread-count="X"
-Improves execution time by running tests concurrently
-📊 Test Organization
-Tests grouped by functionality:
-Home Page
-payments
-Smoke
-Supports selective execution using groups in TestNG suites
 📈 Future Improvements
 Implement Page Object Model (POM) design pattern
-Add reporting (Allure / Extent Reports)
-Add logging framework (Log4j / SLF4J)
-Integrate CI/CD pipeline (GitHub Actions / Jenkins)
-Add cross-browser testing
-Improve driver configuration handling
+Add reporting tools (Allure / Extent Reports)
+Integrate logging framework (Log4j)
+Enable cross-browser testing
+Add CI/CD integration (GitHub Actions / Jenkins)
+Improve test data management
 👤 Author
 
-Ahmed Shaban Mohamed
-
-✅ Summary
-
-This framework demonstrates:
-
-Real-world automation structure
-Scalable test design
-Grouping + parallel execution
-Data-driven testing
-Maven-based project management
+Ahmed Shaban
