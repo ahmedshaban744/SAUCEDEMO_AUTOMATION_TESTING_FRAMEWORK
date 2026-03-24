@@ -28,19 +28,7 @@ TestNG
 WebDriverManager
 Maven
 ChromeDriver
-GitHub
-📂 Project Structure
-src/
- └── test/
-     └── java/
-         ├── InvalidTestCase/
-         │   ├── CheckOutForm.java
-         │   └── logginPageInvalid.java
-         │
-         ├── validTestCase/
-         │   ├── HomePageValid.java
-         │   ├── logginPage.java
-         │   └── PymentsValidScenarios.java
+GitHub        
 🧪 Test Design Approach
 ✅ Valid Test Cases
 Successful login scenarios
